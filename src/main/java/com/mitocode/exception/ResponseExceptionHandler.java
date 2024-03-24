@@ -14,48 +14,63 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class ResponseExceptionHandler {
 
+    /**
+     *  Devuelve un json con la estructua del modelo CustomErrorResponse
+     * @param ex Es la excepcion que se produce
+     * @param request La request que produjo la excepcion
+     * @return un json con el body de CustomErrorREsponse
+     */
 //    @ExceptionHandler(ModelNotFounException.class)
-//    public ResponseEntity<CustmErrorResponse> handleModelNotFoundException(ModelNotFounException ex, WebRequest request){
-//        CustmErrorResponse err = new CustmErrorResponse(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
+//    public ResponseEntity<CustmErrorResponse> handleModelNotFoundException(
+//            ModelNotFounException ex,
+//            WebRequest request){
+//        CustmErrorResponse err = new CustmErrorResponse(LocalDateTime.now(),
+//                                                        ex.getMessage(),
+//                                                        request.getDescription(false));
 //        return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
 //    }
 
-//    /**
-//     * Method with record jus work with java 14+
-//     * @param ex
-//     * @param request
-//     * @return
-//     */
+    /**
+     * Method with record jus work with java 14+
+     * @param ex that exception produced in the request
+     * @param request the request that produce the exception
+     * @return el json with the data of error
+     */
 //    @ExceptionHandler(ModelNotFounException.class)
 //    public ResponseEntity<CustmoErroRecord> handleModelNotFoundException(ModelNotFounException ex, WebRequest request){
 //        CustmoErroRecord err = new CustmoErroRecord(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
 //        return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
 //    }
 
-//    /**
-//     *
-//     * @param ex
-//     * @param request
-//     * @return
-//     */
+    /**
+     * this method use a Model ProblemDetail just work in spring boot 3 and spring framework 6
+     * @param ex Is the exception produced in the request
+     * @param request is the request from the user
+     * @return a body like a model ProblemDetail
+     */
 ////    Just spring boot 3
 //    @ExceptionHandler(ModelNotFounException.class)
 //    public ProblemDetail handleModelNotFoundException(ModelNotFounException ex, WebRequest request){
 //        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
 //        pd.setTitle("Model not foun Exception");
 //        pd.setType(URI.create(request.getDescription(false)));
-//        pd.setProperty("val1",12);
+//        pd.setProperty("val1",12);}// with setProperty we can add more properties
 //        pd.setProperty("val2",20);
 //        return pd;
 //    }
 
+    /**
+     *  this method use a ErrorResponse that provides SpringBoot
+     * @param ex is the exception produced by the request
+     * @param request is the request from the user
+     * @return return a object ErrorResponse structure
+     */
     @ExceptionHandler(ModelNotFounException.class)
     public ErrorResponse handleModelNotFoundException(ModelNotFounException ex, WebRequest request){
         return ErrorResponse.builder(ex,HttpStatus.NOT_FOUND,ex.getMessage())
                 .title("")
                 .type(URI.create(request.getDescription(false)))
-                .property("21",232)
-                .property("e",232)
+                .property("Extra-Value","Something here")
                 .build();
     }
 }
