@@ -1,7 +1,9 @@
 package com.mitocode.controller;
 
 import com.mitocode.model.Patient;
+import com.mitocode.service.dto.PatientDto;
 import com.mitocode.service.impl.PatientServiceImpl;
+import com.mitocode.service.mappers.PatientMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,27 +17,28 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PatientController {
     private final PatientServiceImpl service;
+    private final PatientMapper patientMapper;
 
     @GetMapping
-    public ResponseEntity<List<Patient>> findAll(){
-        return ResponseEntity.ok(this.service.findAll());
+    public ResponseEntity<List<PatientDto>> findAll(){
+        return ResponseEntity.ok(this.service.findAll().stream().map(patientMapper::toDto).toList());
     }
-
+//    @Timed()
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> findById(@PathVariable("id") Integer id){
-        return ResponseEntity.ok(this.service.findById(id));
+    public ResponseEntity<PatientDto> findById(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(this.patientMapper.toDto(this.service.findById(id)));
     }
 
     @PostMapping
-    public ResponseEntity<Patient> save(@RequestBody Patient patient){
-        Patient obj = this.service.save(patient);
+    public ResponseEntity<PatientDto> save(@RequestBody PatientDto patient){
+        PatientDto obj =this.patientMapper.toDto(this.service.save(this.patientMapper.toEntity(patient)));
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Patient> update(@PathVariable("id")Integer id, @RequestBody Patient patient) {
+    public ResponseEntity<PatientDto> update(@PathVariable("id")Integer id, @RequestBody PatientDto patient) {
         patient.setId(id);
-        return ResponseEntity.ok(this.service.update(id,patient));
+        return ResponseEntity.ok(this.patientMapper.toDto(this.service.update(id,this.patientMapper.toEntity(patient))));
     }
 
     @DeleteMapping("/{id}")
