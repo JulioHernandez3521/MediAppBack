@@ -4,6 +4,7 @@ import com.mitocode.model.Patient;
 import com.mitocode.service.dto.PatientDto;
 import com.mitocode.service.impl.PatientServiceImpl;
 import com.mitocode.service.mappers.PatientMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class PatientController {
     }
 
     @PostMapping
-    public ResponseEntity<PatientDto> save(@RequestBody PatientDto patient){
+    public ResponseEntity<PatientDto> save(@Valid @RequestBody PatientDto patient){
         PatientDto obj =this.patientMapper.toDto(this.service.save(this.patientMapper.toEntity(patient)));
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
