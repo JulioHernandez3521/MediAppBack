@@ -54,6 +54,11 @@
 <!--            <artifactId>jakarta.validation-api</artifactId>-->
 <!--            <version>3.1.0-M2</version>-->
 <!--        </dependency>-->
+        <!-- Hateoas - Nivel 3 Richardson -->
+        <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
