@@ -18,7 +18,15 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ResponseExceptionHandler {
-
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<CustmErrorResponse> handleException(
+            Exception ex,
+            WebRequest request){
+        CustmErrorResponse err = new CustmErrorResponse(LocalDateTime.now(),
+                                                        ex.getMessage(),
+                                                        request.getDescription(false));
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
     /**
      *  Devuelve un json con la estructua del modelo CustomErrorResponse
      * @param ex Es la excepcion que se produce
@@ -87,7 +95,7 @@ public class ResponseExceptionHandler {
                 String errorMessage = error.getDefaultMessage();
                 errors.put(fieldName, errorMessage);
             });
-        return ErrorResponse.builder(ex,HttpStatus.NOT_FOUND,ex.getMessage())
+        return ErrorResponse.builder(ex,HttpStatus.BAD_REQUEST,ex.getMessage())
                 .title("")
                 .type(URI.create(request.getDescription(false)))
                 .property("Errors:",errors)
