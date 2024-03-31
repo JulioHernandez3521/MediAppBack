@@ -1,18 +1,25 @@
 package com.mitocode.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mitocode.model.Patient;
 import com.mitocode.service.dto.PatientDto;
 import com.mitocode.service.impl.PatientServiceImpl;
 import com.mitocode.service.mappers.PatientMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,8 +27,10 @@ import java.util.List;
 @RequestMapping("api/patients")
 @RequiredArgsConstructor
 public class PatientController {
+    private final Logger log = LoggerFactory.getLogger(PatientController.class);
     private final PatientServiceImpl service;
     private final PatientMapper patientMapper;
+    private final ObjectMapper objectMapper;
 
     @GetMapping
     public ResponseEntity<List<PatientDto>> findAll(){
@@ -60,4 +69,18 @@ public class PatientController {
         return resource;
     }
 
+    @PostMapping("/seed")
+    public ResponseEntity<List<PatientDto>> saveAll(){
+        List<PatientDto> data = new ArrayList<>();
+        TypeReference<List<PatientDto>> typeReference = new TypeReference<List<PatientDto>>(){};
+        InputStream inputStream = TypeReference.class.getResourceAsStream("/seed/patients.json");
+        try {
+            data = this.objectMapper.readValue(inputStream,typeReference);
+            data = this.patientMapper.toDtoList(this.service.saveAll(this.patientMapper.toEntityList(data)));
+            log.info("Total items saved: {}",data.size());
+        } catch (IOException e){
+           log.error(e.getMessage());
+        }
+        return ResponseEntity.ok(data);
+    }
 }
