@@ -22,6 +22,10 @@ public abstract class CRUDImpl<T,ID> implements ICRUD<T,ID> {
     public T save(T patient) {
         return this.getRepo().save(patient);
     }
+    @Override
+    public List<T> saveAll(List<T> patient) {
+        return this.getRepo().saveAll(patient);
+    }
 
     @Override
     public T update(ID id, T patient) {
