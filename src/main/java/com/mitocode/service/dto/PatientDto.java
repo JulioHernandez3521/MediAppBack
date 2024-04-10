@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 public class PatientDto {
     private Integer id;
     @NotNull
-    @NotEmpty(message = "The FistName field is required")
+    @NotEmpty(message = "{firstname.size}")
     @NotBlank
     @Size(min = 3, max = 70)
     private String firstName;
-    @NotEmpty
+    @NotEmpty(message = "{lastname.size}")
     private String lastName;
     @NotEmpty
     private String dni;

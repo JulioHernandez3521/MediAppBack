@@ -21,6 +21,11 @@ public class LanguageController {
     private final HttpServletRequest httpServletRequest;
     private final HttpServletResponse httpServletResponse;
 
+    /**
+     * Para cambiar el idioma de mesajes de la api
+     * @param loc la localidad del idioma para el back
+     * @return
+     */
     @GetMapping("/locale/{loc}")
     public ResponseEntity<Void> changeLocale(@PathVariable("loc") String loc){
         Locale userLocale = switch (loc){
