@@ -39,7 +39,7 @@ public class Consult {
     private String numConsult;
 
     @Column(nullable = false)
-    private LocalDateTime consulDate;
+    private LocalDateTime consultDate;
 
     @OneToMany(mappedBy = "consult",
             cascade = {CascadeType.ALL},

@@ -23,7 +23,7 @@ public class ConsultDetail {
     private Consult consult;
 
     @Column(nullable = false, length = 50)
-    private String diagnostic;
+    private String diagnosis;
 
     @Column(nullable = false, length = 300)
     private String treatment;
