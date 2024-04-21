@@ -23,7 +23,7 @@ public class PatientDto {
     private String address;
     @NotEmpty
     @NotNull
-    @Pattern(regexp = "[0,9]+")
+//    @Pattern(regexp = "[0,9]+")
     private String phone;
     @NotEmpty
     @Email
