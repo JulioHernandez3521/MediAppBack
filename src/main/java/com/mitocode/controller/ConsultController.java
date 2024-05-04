@@ -52,7 +52,7 @@ public class ConsultController {
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody ConsultListExamDTO dto) throws Exception{
         Consult cons = this.mapper.toEntity(dto.getConsult());
-        List<Exam> exams = this.examMapper.toEntityList(dto.getLstExam());
+        List<Exam> exams = this.examMapper.toEntityList(dto.getListExam());
         Consult obj = service.saveTransactional(cons, exams);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdConsult()).toUri();
         return ResponseEntity.created(location).build();

@@ -16,5 +16,5 @@ public class ConsultListExamDTO {
     private ConsultDTO consult;
 
     @NotNull
-    private List<ExamDTO> lstExam;
+    private List<ExamDTO> listExam;
 }
