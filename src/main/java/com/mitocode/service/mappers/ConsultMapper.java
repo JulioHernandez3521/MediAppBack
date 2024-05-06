@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor // This annotation should us obligate to give the final attributes
 public class ConsultMapper {
-    @Qualifier("modelMapper")
+    @Qualifier("ConsultMapper")
     private final ModelMapper mapper;
     public ConsultDTO toDto (Consult entity){
         return this.mapper.map(entity, ConsultDTO.class);

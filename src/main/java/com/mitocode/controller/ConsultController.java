@@ -5,13 +5,11 @@ import com.mitocode.model.Exam;
 import com.mitocode.service.IConsultService;
 import com.mitocode.service.dto.ConsultDTO;
 import com.mitocode.service.dto.ConsultListExamDTO;
+import com.mitocode.service.dto.FiltersCosultDTO;
 import com.mitocode.service.mappers.ConsultMapper;
 import com.mitocode.service.mappers.ExamMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -79,6 +78,14 @@ public class ConsultController {
         resource.add(link1.withRel("consult-info-byId"));
         resource.add(link2.withRel("consult-all-info"));
         return resource;
+    }
+    @PostMapping("/search/others")
+    public ResponseEntity<List<ConsultDTO>> findAllByExam(@RequestBody FiltersCosultDTO dto){
+        return ResponseEntity.ok(this.mapper.toDtoList(this.service.search(dto.getDni(), dto.getFullName())));
+    }
+    @GetMapping("/search/dates")
+    public ResponseEntity<List<ConsultDTO>> searchConsultByDate(@RequestParam(value = "date1", defaultValue = "2024-04-11") String date, @RequestParam(value = "date2", defaultValue = "2024-04-11") String date2){
+        return  ResponseEntity.ok(this.mapper.toDtoList(this.service.searchbyDates(LocalDateTime.parse(date), LocalDateTime.parse(date2))));
     }
 
 }
