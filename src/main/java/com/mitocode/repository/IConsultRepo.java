@@ -1,6 +1,7 @@
 package com.mitocode.repository;
 
 import com.mitocode.model.Consult;
+import com.mitocode.model.IConsultProjectionDTO;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -16,5 +17,8 @@ public interface IConsultRepo extends IGenericRepo<Consult, Integer> {
     //BETWEEN WORKS LIKE THIS >= | <
     @Query("FROM Consult c WHERE c.consultDate BETWEEN :d1 AND :d2")
     List<Consult> searchByDates(@Param("d1")LocalDateTime d1, @Param("d2")LocalDateTime d2);
+
+    @Query(value = "SELECT * FROM fn_list()",nativeQuery = true)
+    List<IConsultProjectionDTO> callProcedureOrFuntion();
 
 }

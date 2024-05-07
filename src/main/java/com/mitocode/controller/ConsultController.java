@@ -2,6 +2,7 @@ package com.mitocode.controller;
 
 import com.mitocode.model.Consult;
 import com.mitocode.model.Exam;
+import com.mitocode.model.IConsultProjectionDTO;
 import com.mitocode.service.IConsultService;
 import com.mitocode.service.dto.ConsultDTO;
 import com.mitocode.service.dto.ConsultListExamDTO;
@@ -88,4 +89,8 @@ public class ConsultController {
         return  ResponseEntity.ok(this.mapper.toDtoList(this.service.searchbyDates(LocalDateTime.parse(date), LocalDateTime.parse(date2))));
     }
 
+    @GetMapping("/callProcedureProjection")
+    public ResponseEntity<List<IConsultProjectionDTO>> callProcedureProjection(){
+        return ResponseEntity.ok(this.service.consultProjection());
+    }
 }
