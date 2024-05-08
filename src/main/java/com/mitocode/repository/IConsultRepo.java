@@ -21,4 +21,6 @@ public interface IConsultRepo extends IGenericRepo<Consult, Integer> {
     @Query(value = "SELECT * FROM fn_list()",nativeQuery = true)
     List<IConsultProjectionDTO> callProcedureOrFuntion();
 
+    @Query(value = "SELECT * FROM fn_list()",nativeQuery = true)
+    List<Object[]> callProcedureOrFuntionNative();
 }

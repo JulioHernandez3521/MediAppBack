@@ -6,6 +6,7 @@ import com.mitocode.model.IConsultProjectionDTO;
 import com.mitocode.service.IConsultService;
 import com.mitocode.service.dto.ConsultDTO;
 import com.mitocode.service.dto.ConsultListExamDTO;
+import com.mitocode.service.dto.ConsultProcDTO;
 import com.mitocode.service.dto.FiltersCosultDTO;
 import com.mitocode.service.mappers.ConsultMapper;
 import com.mitocode.service.mappers.ExamMapper;
@@ -92,5 +93,9 @@ public class ConsultController {
     @GetMapping("/callProcedureProjection")
     public ResponseEntity<List<IConsultProjectionDTO>> callProcedureProjection(){
         return ResponseEntity.ok(this.service.consultProjection());
+    }
+    @GetMapping("/callProcedureProjectionNative")
+    public ResponseEntity<List<ConsultProcDTO>> callProcedureProjectionNative(){
+        return ResponseEntity.ok(this.service.consultProjectionNative());
     }
 }

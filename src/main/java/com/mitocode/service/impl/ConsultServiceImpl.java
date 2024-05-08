@@ -1,5 +1,6 @@
 package com.mitocode.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mitocode.model.Consult;
 import com.mitocode.model.Exam;
 import com.mitocode.model.IConsultProjectionDTO;
@@ -7,12 +8,14 @@ import com.mitocode.repository.IConsultExamRepo;
 import com.mitocode.repository.IConsultRepo;
 import com.mitocode.repository.IGenericRepo;
 import com.mitocode.service.IConsultService;
+import com.mitocode.service.dto.ConsultProcDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +24,7 @@ public class ConsultServiceImpl extends CRUDImpl<Consult, Integer> implements IC
     //@Autowired
     private final IConsultRepo consultRepo;// = new ConsultRepo();
     private final IConsultExamRepo ceRepo;
-
+    private final ObjectMapper mapper;
     @Override
     protected IGenericRepo<Consult, Integer> getRepo() {
         return consultRepo;
@@ -50,5 +53,15 @@ public class ConsultServiceImpl extends CRUDImpl<Consult, Integer> implements IC
     @Override
     public List<IConsultProjectionDTO> consultProjection() {
         return this.consultRepo.callProcedureOrFuntion();
+    }
+
+    @Override
+    public List<ConsultProcDTO> consultProjectionNative() {
+        return this.consultRepo.callProcedureOrFuntionNative().stream().map(e -> {
+            ConsultProcDTO dto = new ConsultProcDTO();
+            dto.setConsultdate((String) e[1]);
+            dto.setQuantity((Integer) e[0]);
+            return dto;
+        }).collect(Collectors.toList());
     }
 }
