@@ -15,4 +15,5 @@ public interface IConsultService extends ICRUD<Consult, Integer> {
     List<Consult> searchbyDates(LocalDateTime d1, LocalDateTime d2);
     List<IConsultProjectionDTO> consultProjection();
     List<ConsultProcDTO> consultProjectionNative();
+    byte[] generateReport() throws Exception;
 }
