@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +38,12 @@ public class PatientController {
     public ResponseEntity<List<PatientDto>> findAll(){
         return ResponseEntity.ok(this.service.findAll().stream().map(patientMapper::toDto).toList());
     }
+
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<PatientDto>> findAllPageable(Pageable pageable){
+        return  ResponseEntity.ok(this.patientMapper.toDtoPage(this.service.listPage(pageable)));
+    }
+
 //    @Timed()
     @GetMapping("/{id}")
     public ResponseEntity<PatientDto> findById(@PathVariable("id") Integer id){
