@@ -57,9 +57,19 @@ public class JwtTokenUtil implements Serializable {
     public String getUserNameFromToken(String token){
         return getClaimFromToken(token, Claims::getSubject);
     }
+
     public Date getDateExpirationFromToken(String token){
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
+    public boolean isTokenExpired(String token){
+        final Date expiration = getDateExpirationFromToken(token);
+        return expiration.before(new Date());
+    }
+
+    public boolean validaToken(String token, UserDetails userDetails){
+        final String username = getUserNameFromToken(token);
+        return (username.equalsIgnoreCase(userDetails.getUsername()) && !isTokenExpired(token));
+    }
 
 }
