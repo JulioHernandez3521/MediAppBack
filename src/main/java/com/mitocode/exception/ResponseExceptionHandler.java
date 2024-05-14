@@ -1,6 +1,7 @@
 package com.mitocode.exception;
 
 import org.springframework.http.*;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -79,6 +80,20 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(ModelNotFounException.class)
     public ErrorResponse handleModelNotFoundException(ModelNotFounException ex, WebRequest request){
+        return ErrorResponse.builder(ex,HttpStatus.NOT_FOUND,ex.getMessage())
+                .title("")
+                .type(URI.create(request.getDescription(false)))
+                .property("Extra-Value","Something here")
+                .build();
+    }
+    /**
+     *  this method use a ErrorResponse that provides SpringBoot
+     * @param ex is the exception produced by the request
+     * @param request is the request from the user
+     * @return return a object ErrorResponse structure
+     */
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ErrorResponse userNameNotFoundException(UsernameNotFoundException ex, WebRequest request){
         return ErrorResponse.builder(ex,HttpStatus.NOT_FOUND,ex.getMessage())
                 .title("")
                 .type(URI.create(request.getDescription(false)))
