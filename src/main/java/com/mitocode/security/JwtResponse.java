@@ -2,5 +2,5 @@ package com.mitocode.security;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record JwtResponse(@JsonProperty(value = "acces_token") String accessTokrn) {
+public record JwtResponse(@JsonProperty(value = "acces_token") String accessToken) {
 }
