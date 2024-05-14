@@ -1,6 +1,8 @@
 package com.mitocode.config;
 
+import com.mitocode.model.Consult;
 import com.mitocode.model.Medic;
+import com.mitocode.service.dto.ConsultDTO;
 import com.mitocode.service.dto.MedicDTO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -29,6 +31,14 @@ public class MapperConfig {
         type2.addMapping(Medic::getLastName, (dest, v) -> dest.setSurName((String) v));
 
 
+        return mapper;
+    }
+    @Bean("ConsultMapper")
+    public ModelMapper consultMapper(){
+        ModelMapper mapper = new ModelMapper();
+        mapper.createTypeMap(Consult.class, ConsultDTO.class)
+                .addMapping(e-> e.getMedic().getFistName(), (dest, v) -> dest.getMedic().setPrimaryName((String) v))
+                .addMapping(e -> e.getMedic().getLastName(), (dest, v) -> dest.getMedic().setSurName((String) v));
         return mapper;
     }
 }

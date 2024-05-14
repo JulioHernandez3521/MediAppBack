@@ -5,6 +5,7 @@ import com.mitocode.service.dto.PatientDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,5 +27,8 @@ public class PatientMapper {
     }
     public List<PatientDto> toDtoList (List<Patient> entity){
         return entity.stream().map(e -> this.mapper.map(e, PatientDto.class)).collect(Collectors.toList());
+    }
+    public Page<PatientDto> toDtoPage (Page<Patient> entity){
+        return entity.map(e -> this.mapper.map(e, PatientDto.class));
     }
 }
