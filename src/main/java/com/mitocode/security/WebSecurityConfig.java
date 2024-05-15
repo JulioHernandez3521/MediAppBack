@@ -34,15 +34,35 @@ public class WebSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    /**
+     * This is for encode the user's password
+     * @return a new PasswordEncoder Bean
+     */
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    /**
+     * This method permit us verify the password
+     * @param authenticationManagerBuilder is the model that manage the authentication
+     * @throws Exception can produce some exceptions
+     */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
+    /**
+     * this method permit us:
+     * Disabled the CSFR token
+     * Disabled the form login
+     * And make the request endpoint's filter
+     * We can specify the class tha manage the exceptions and set the filter class
+     * @param httpSecurity is the object that contains the security
+     * @return the filter that Spring Security will make
+     * @throws Exception can produce some exceptions
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // Desde spring boot 3.1+

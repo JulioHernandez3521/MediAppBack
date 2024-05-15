@@ -15,6 +15,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+/**
+ * This class is for manage the exceptions produced by JWTRequestFilter
+ */
+
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

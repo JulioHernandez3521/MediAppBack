@@ -13,11 +13,21 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is for validate the users
+ */
 @Service
 @RequiredArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
 
     private final UserRepository repository;
+
+    /**
+     * This method permit find a user and put the roles
+     * @param username is the email
+     * @return A user Details this class is from spring
+     * @throws UsernameNotFoundException can throw an exception
+     */
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
