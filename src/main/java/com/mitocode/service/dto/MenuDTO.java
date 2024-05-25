@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MenuDTO {
     private Integer idMenu;
-//    private String icon;
+    private String icon;
     private String name;
     private String url;
 

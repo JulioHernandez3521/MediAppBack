@@ -18,7 +18,7 @@ public class Menu {
     @EqualsAndHashCode.Include
     private Integer idMenu;
 
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String icon;
     @Column(nullable = false, length = 20)
     private String name;
