@@ -7,6 +7,7 @@ import com.mitocode.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends CRUDImpl<User, Integer> implements IUserService {
 
     private final IUserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     protected IGenericRepo<User, Integer> getRepo() {
@@ -24,4 +26,23 @@ public class UserServiceImpl extends CRUDImpl<User, Integer> implements IUserSer
     public Page<User> listPage(Pageable pageable) {
         return this.repository.findAll(pageable);
     }
+
+    @Override
+    public User save(User data){
+        String hashedPassword = passwordEncoder.encode(data.getPassword());
+        data.setPassword(hashedPassword);
+        return super.save(data);
+    }
+
+//    @Override
+//    public User update(Integer id, User data){
+//        User old = super.findById(id);
+//        if(old != null){
+//            if(old.getPassword().equals(data.getPassword()))return super.update(id,data);
+//            String hashedPassword = passwordEncoder.encode(data.getPassword());
+//            data.setPassword(hashedPassword);
+//            return super.update(id, data);
+//        }
+//        return save(data);
+//    }
 }
