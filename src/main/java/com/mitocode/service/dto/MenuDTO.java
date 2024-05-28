@@ -1,8 +1,11 @@
 package com.mitocode.service.dto;
 
+import com.mitocode.model.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -12,5 +15,5 @@ public class MenuDTO {
     private String icon;
     private String name;
     private String url;
-
+    private List<Rol> roles;
 }
