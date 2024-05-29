@@ -34,15 +34,13 @@ public class UserServiceImpl extends CRUDImpl<User, Integer> implements IUserSer
         return super.save(data);
     }
 
-//    @Override
-//    public User update(Integer id, User data){
-//        User old = super.findById(id);
-//        if(old != null){
-//            if(old.getPassword().equals(data.getPassword()))return super.update(id,data);
-//            String hashedPassword = passwordEncoder.encode(data.getPassword());
-//            data.setPassword(hashedPassword);
-//            return super.update(id, data);
-//        }
-//        return save(data);
-//    }
+    @Override
+    public User update(Integer id, User data){
+        User old = super.findById(id);
+        if(old == null) return super.save(data);
+        if(old.getPassword().equals(data.getPassword()))return super.save(data);
+        String hashedPassword = passwordEncoder.encode(data.getPassword());
+        data.setPassword(hashedPassword);
+        return super.save(data);
+    }
 }
