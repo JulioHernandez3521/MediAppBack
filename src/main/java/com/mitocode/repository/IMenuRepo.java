@@ -14,7 +14,7 @@ public interface IMenuRepo extends IGenericRepo<Menu, Integer> {
             inner join user_role ur on ur.id_rol = mr.id_rol
             inner join menu m on m.id_menu = mr.id_menu
             inner join user_data u on u.id_user = ur.id_user
-            where u.username = :username
+            where u.username = :username order by id_menu asc
         """, nativeQuery = true)
     List<Menu> getMenuByUserName(@Param("username") String userName);
 }
