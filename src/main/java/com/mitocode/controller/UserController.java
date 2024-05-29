@@ -41,6 +41,10 @@ public class UserController {
     public ResponseEntity<UserDTO> findById(@PathVariable("id") Integer id){
         return ResponseEntity.ok(this.mapper.toDto(this.service.findById(id)));
     }
+    @GetMapping("/findByName/{id}")
+    public ResponseEntity<UserDTO> findByUserName(@PathVariable("id") String id){
+        return ResponseEntity.ok(this.mapper.toDto(this.service.findByUsername(id)));
+    }
 
     @PostMapping
     public ResponseEntity<UserDTO> save(@Valid @RequestBody UserDTO patient){

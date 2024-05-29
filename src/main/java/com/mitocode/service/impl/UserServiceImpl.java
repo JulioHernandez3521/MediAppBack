@@ -4,6 +4,7 @@ import com.mitocode.model.User;
 import com.mitocode.repository.IGenericRepo;
 import com.mitocode.repository.IUserRepository;
 import com.mitocode.service.IUserService;
+import com.mitocode.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,11 @@ public class UserServiceImpl extends CRUDImpl<User, Integer> implements IUserSer
     @Override
     public Page<User> listPage(Pageable pageable) {
         return this.repository.findAll(pageable);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return this.repository.findFirstByUsername(username);
     }
 
     @Override
