@@ -19,7 +19,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/signs")
+@RequestMapping("/api/signs")
 @RequiredArgsConstructor
 @Slf4j
 public class SignsController {

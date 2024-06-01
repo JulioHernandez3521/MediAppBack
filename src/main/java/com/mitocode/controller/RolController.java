@@ -19,7 +19,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/roles")
+@RequestMapping("/api/roles")
 @RequiredArgsConstructor
 @Slf4j
 public class RolController {

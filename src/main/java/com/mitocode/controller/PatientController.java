@@ -26,7 +26,7 @@ import java.util.List;
 
 @RestController
 //@RequestMapping("${patient.controller.path}")
-@RequestMapping("api/patients")
+@RequestMapping("/api/patients")
 @RequiredArgsConstructor
 public class PatientController {
     private final Logger log = LoggerFactory.getLogger(PatientController.class);
